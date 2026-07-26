@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subjects — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/subjects.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Subjects</div>
+          <div class="page-subtitle">Manage your classes</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <button class="btn btn-primary btn-sm" id="btn-add-subject">
+          <i class="fa-solid fa-plus"></i> Add Subject
+        </button>
+      </div>
+    </header>
+    <div class="page-body">
+      <div class="subjects-toolbar">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="search-subjects" placeholder="Search subjects..." />
+        </div>
+      </div>
+      <div id="subjects-empty" class="empty-state d-none">
+        <div class="empty-state-icon"><i class="fa-solid fa-book-open"></i></div>
+        <h3>No subjects found</h3>
+        <p>Add some subjects to get started.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('btn-add-subject').click()">Add Subject</button>
+      </div>
+      <div class="subjects-grid stagger-children" id="subjects-grid"></div>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="subject-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="subject-modal-title">Add Subject</h3>
+      <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="sub-id" />
+      <div class="form-group">
+        <label class="form-label">Subject Name *</label>
+        <input class="form-input" type="text" id="sub-name" placeholder="e.g. Engineering Mathematics" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject Code</label>
+        <input class="form-input" type="text" id="sub-code" placeholder="e.g. MAT101" />
+      </div>
+      <div class="form-group">
+    <label class="form-label">Present Classes</label>
+    <input
+        class="form-input"
+        type="number"
+        id="sub-present"
+        min="0"
+        value="0"
+        placeholder="0">
+</div>
+
+<div class="form-group">
+    <label class="form-label">Total Classes</label>
+    <input
+        class="form-input"
+        type="number"
+        id="sub-total"
+        min="0"
+        value="0"
+        placeholder="0">
+</div>
+      <div class="form-group">
+        <label class="form-label">Faculty Name</label>
+        <input class="form-input" type="text" id="sub-faculty" placeholder="e.g. Dr. Smith" />
+      </div>
+      <div class="form-group">
+        <label class="color-picker-label">Color Label</label>
+        <div class="color-picker-grid" id="sub-colors"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost modal-close-btn">Cancel</button>
+      <button class="btn btn-primary" id="sub-save">Save Subject</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

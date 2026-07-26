@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BunkWise Dashboard — Your attendance overview, today's classes, and smart analytics." />
+  <meta name="theme-color" content="#6C63FF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Dashboard — BunkWise</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/dashboard.css" />
+</head>
+<body>
+
+<!-- Background Orbs -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+<!-- App Shell -->
+<div class="app-shell">
+
+  <!-- Sidebar (injected by app.js) -->
+  <div id="nav-container"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Open navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="page-subtitle" id="header-date">Loading…</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <!-- Search -->
+        <button class="btn-icon" id="search-btn" title="Search" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <!-- Theme Toggle -->
+        <button class="btn-icon" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Install PWA -->
+        <button class="btn btn-primary btn-sm d-none" id="pwa-install-btn">
+          <i class="fa-solid fa-download"></i> Install
+        </button>
+        <!-- Notifications -->
+        <button class="btn-icon" id="notif-btn" title="Notifications" aria-label="Notifications">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <div class="page-body" id="dashboard-body">
+
+      <!-- ── Loading Skeleton ─────────────────────────────── -->
+      <div id="dashboard-loading">
+        <div class="skeleton" style="height:160px;border-radius:var(--radius-2xl);margin-bottom:var(--space-6)"></div>
+        <div class="grid grid-4" style="margin-bottom:var(--space-6)">
+          <div class="skeleton" style="height:120px;border-radius:var(--radius-xl)"></div>
+          <div class="skeleton" style="height:120px;border-radius:var(--radius-xl)"></div>
+          <div class="skeleton" style="height:120px;border-radius:var(--radius-xl)"></div>
+          <div class="skeleton" style="height:120px;border-radius:var(--radius-xl)"></div>
+        </div>
+        <div class="grid grid-2">
+          <div class="skeleton" style="height:300px;border-radius:var(--radius-xl)"></div>
+          <div class="skeleton" style="height:300px;border-radius:var(--radius-xl)"></div>
+        </div>
+      </div>
+
+      <!-- ── Dashboard Content (shown after load) ─────────── -->
+      <div id="dashboard-content" class="d-none">
+
+        <!-- Hero Banner -->
+        <div class="dash-hero stagger-children">
+          <div class="dash-hero-top">
+            <div>
+              <div class="dash-greeting" id="dash-greeting">Good morning</div>
+              <div class="dash-name" id="dash-name">Student</div>
+              <div class="dash-date" id="dash-date">Today</div>
+            </div>
+            <div class="dash-overall-badge">
+              <div class="dash-overall-value" id="dash-overall-pct">—</div>
+              <div class="dash-overall-label">Overall</div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2)">
+              <span style="font-size:13px;color:var(--text-secondary)">Overall Attendance</span>
+              <span style="font-size:13px;color:var(--text-secondary)">
+                Target: <span id="dash-target-display">75%</span>
+              </span>
+            </div>
+            <div class="progress-bar-container" style="height:10px;border-radius:var(--radius-full)">
+              <div class="progress-bar animated" id="overall-progress" style="width:0%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:var(--space-2);font-size:12px;color:var(--text-tertiary)">
+              <span id="dash-classes-info">— classes attended</span>
+              <span id="dash-bunk-info">— safe to bunk</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="dash-stats-grid stagger-children">
+          <div class="dash-stat-card">
+            <div class="accent-bar" style="background:var(--gradient-primary)"></div>
+            <div class="dash-stat-icon" style="background:rgba(var(--color-primary-rgb),0.12);color:var(--color-primary-light)">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="dash-stat-value" id="stat-subjects">0</div>
+            <div class="dash-stat-label">Subjects</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="accent-bar" style="background:var(--gradient-success)"></div>
+            <div class="dash-stat-icon" style="background:rgba(var(--color-success-rgb),0.12);color:var(--color-success)">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="dash-stat-value" id="stat-present">0</div>
+            <div class="dash-stat-label">Present Today</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="accent-bar" style="background:var(--gradient-secondary)"></div>
+            <div class="dash-stat-icon" style="background:rgba(var(--color-secondary-rgb),0.12);color:var(--color-secondary)">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="dash-stat-value" id="stat-absent">0</div>
+            <div class="dash-stat-label">Absent Today</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="accent-bar" style="background:var(--gradient-warm)"></div>
+            <div class="dash-stat-icon" style="background:rgba(255,152,0,0.12);color:var(--color-warning)">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div class="dash-stat-value" id="stat-streak">0</div>
+            <div class="dash-stat-label">Day Streak</div>
+          </div>
+        </div>
+
+        <!-- Main 2-Column Grid -->
+        <div class="grid grid-2" style="gap:var(--space-6)">
+
+          <!-- Left Column -->
+          <div>
+            <!-- Prediction Summary Card -->
+            <div class="card" style="margin-bottom:var(--space-5)">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-square-poll-vertical"></i> Prediction Summary
+                </div>
+              </div>
+              <div class="grid grid-2" style="gap:var(--space-3)" id="prediction-summary-details">
+                <div style="grid-column: span 2; text-align: center; color: var(--text-secondary); padding: var(--space-4);">Loading predictions...</div>
+              </div>
+            </div>
+
+            <!-- Attendance Prediction Card -->
+            <div class="card" style="margin-bottom:var(--space-5)">
+              <div class="card-header" style="justify-content:space-between; display:flex;">
+                <div class="card-title">
+                  <i class="fa-solid fa-compass"></i> Attendance Prediction
+                </div>
+                <button class="btn btn-ghost btn-sm" id="btn-open-whatif-modal">
+                  <i class="fa-solid fa-sliders"></i> What-If Simulator
+                </button>
+              </div>
+              <div id="prediction-subjects-list" class="stagger-children" style="display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-2) 0;">
+                <div style="text-align: center; color: var(--text-secondary); padding: var(--space-4);">No subject predictions available.</div>
+              </div>
+            </div>
+
+            <!-- Prediction History Snapshot Comparison -->
+            <div class="card" style="margin-bottom:var(--space-5)">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-history"></i> Prediction History
+                </div>
+              </div>
+              <div id="prediction-history-container" style="padding:var(--space-1) 0">
+                <div style="text-align: center; color: var(--text-secondary); padding: var(--space-4);">No history data yet.</div>
+              </div>
+            </div>
+
+            <!-- Today's Classes -->
+            <div class="card" style="margin-bottom:var(--space-5)">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-calendar-day"></i> Today's Classes
+                </div>
+                <a href="./timetable.html" class="btn btn-ghost btn-sm">View All</a>
+              </div>
+              <div id="today-classes">
+                <div class="empty-state" style="padding:var(--space-8)">
+                  <div class="empty-state-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                  <h3>No classes today</h3>
+                  <p>Enjoy your day off!</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Weekly Attendance Chart -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-chart-line"></i> This Week
+                </div>
+                <select class="form-select" id="chart-week-select" style="width:auto;padding:6px 32px 6px 12px;font-size:13px">
+                  <option value="7">Last 7 days</option>
+                  <option value="14">Last 14 days</option>
+                  <option value="30">Last 30 days</option>
+                </select>
+              </div>
+              <div class="chart-container" style="height:200px">
+                <canvas id="weekly-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div>
+            <!-- Subject Attendance -->
+            <div class="card" style="margin-bottom:var(--space-5)">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-chart-pie"></i> By Subject
+                </div>
+                <a href="./subjects.html" class="btn btn-ghost btn-sm">Manage</a>
+              </div>
+
+              <!-- No subjects state -->
+              <div id="subjects-empty" class="d-none">
+                <div class="empty-state" style="padding:var(--space-8)">
+                  <div class="empty-state-icon"><i class="fa-solid fa-book-open"></i></div>
+                  <h3>No subjects yet</h3>
+                  <p>Add your subjects to track attendance</p>
+                  <a href="./subjects.html" class="btn btn-primary btn-sm" style="margin-top:var(--space-4)">
+                    <i class="fa-solid fa-plus"></i> Add Subjects
+                  </a>
+                </div>
+              </div>
+
+              <div id="subject-progress-list" class="stagger-children"></div>
+            </div>
+
+            <!-- Streak & Achievements -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-trophy"></i> Achievements
+                </div>
+              </div>
+
+              <div class="streak-display" style="margin-bottom:var(--space-5)">
+                <div class="streak-flame">🔥</div>
+                <div>
+                  <div class="streak-count" id="streak-count">0</div>
+                  <div class="streak-label">Day attendance streak</div>
+                </div>
+              </div>
+
+              <div id="achievements-list" class="stagger-children"></div>
+            </div>
+          </div>
+
+        </div><!-- /grid -->
+
+        <!-- Recent Activity -->
+        <div class="card" style="margin-top:var(--space-5)">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-clock-rotate-left"></i> Recent Activity
+            </div>
+            <a href="./attendance.html" class="btn btn-ghost btn-sm">View All</a>
+          </div>
+          <div id="recent-activity">
+            <div class="empty-state" style="padding:var(--space-8)">
+              <div class="empty-state-icon"><i class="fa-solid fa-clock"></i></div>
+              <h3>No activity yet</h3>
+              <p>Start marking attendance to see your history here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-4" style="margin-top:var(--space-5)">
+          <a href="./attendance.html" class="card card-hover flex-center flex-col gap-3 text-center" style="padding:var(--space-6);text-decoration:none">
+            <div style="width:48px;height:48px;border-radius:var(--radius-lg);background:rgba(var(--color-success-rgb),0.12);color:var(--color-success);display:flex;align-items:center;justify-content:center;font-size:22px">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <span style="font-size:14px;font-weight:600;color:var(--text-primary)">Mark Attendance</span>
+          </a>
+          <a href="./calculator.html" class="card card-hover flex-center flex-col gap-3 text-center" style="padding:var(--space-6);text-decoration:none">
+            <div style="width:48px;height:48px;border-radius:var(--radius-lg);background:rgba(var(--color-warning-rgb),0.12);color:var(--color-warning);display:flex;align-items:center;justify-content:center;font-size:22px">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <span style="font-size:14px;font-weight:600;color:var(--text-primary)">Bunk Calculator</span>
+          </a>
+          <a href="./reports.html" class="card card-hover flex-center flex-col gap-3 text-center" style="padding:var(--space-6);text-decoration:none">
+            <div style="width:48px;height:48px;border-radius:var(--radius-lg);background:rgba(var(--color-info-rgb),0.12);color:var(--color-info);display:flex;align-items:center;justify-content:center;font-size:22px">
+              <i class="fa-solid fa-chart-bar"></i>
+            </div>
+            <span style="font-size:14px;font-weight:600;color:var(--text-primary)">View Reports</span>
+          </a>
+          <a href="./subjects.html" class="card card-hover flex-center flex-col gap-3 text-center" style="padding:var(--space-6);text-decoration:none">
+            <div style="width:48px;height:48px;border-radius:var(--radius-lg);background:rgba(var(--color-primary-rgb),0.12);color:var(--color-primary-light);display:flex;align-items:center;justify-content:center;font-size:22px">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+            <span style="font-size:14px;font-weight:600;color:var(--text-primary)">Manage Subjects</span>
+          </a>
+        </div>
+
+      </div><!-- /dashboard-content -->
+
+    </div><!-- /page-body -->
+  </main>
+
+  <!-- Bottom Nav (injected by app.js) -->
+  <div id="bottom-nav-container"></div>
+
+</div><!-- /app-shell -->
+
+<!-- What-If Simulator Modal -->
+<div class="modal-overlay" id="whatif-modal-overlay">
+  <div class="modal" style="max-width:540px">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-sliders"></i> What-If Simulator</div>
+      <button class="modal-close" id="whatif-close-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="whatif-subject">Select Subject</label>
+        <select class="form-select" id="whatif-subject">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+      <div class="grid grid-2" style="gap:var(--space-4)">
+        <div class="form-group">
+          <label class="form-label" for="whatif-attend">Future Classes to Attend</label>
+          <input type="number" class="form-input" id="whatif-attend" min="0" value="5" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="whatif-miss">Future Classes to Bunk</label>
+          <input type="number" class="form-input" id="whatif-miss" min="0" value="0" />
+        </div>
+      </div>
+      <div style="margin-top:var(--space-5); border-top:1px solid var(--border-color); padding-top:var(--space-4)">
+        <h4 style="margin-bottom:var(--space-3); font-weight: 700;">Projected Results</h4>
+        <div class="grid grid-2" style="gap:var(--space-3)" id="whatif-results-grid">
+          <!-- Results rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- App JS -->
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

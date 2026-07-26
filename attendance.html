@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/attendance.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Attendance</div>
+          <div class="page-subtitle">Mark your daily presence</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <input type="date" id="date-picker-hidden" style="width:0;height:0;opacity:0;position:absolute;z-index:-1" />
+        <button class="btn btn-ghost btn-sm" id="btn-calendar">
+          <i class="fa-solid fa-calendar-days"></i> Select Date
+        </button>
+      </div>
+    </header>
+    <div class="page-body">
+      
+      <div class="attendance-date-nav">
+        <button class="date-nav-btn" id="btn-prev-day"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="date-display" id="date-display" onclick="document.getElementById('btn-calendar').click()">
+          <div class="date-display-day" id="date-day">Today</div>
+          <div class="date-display-full" id="date-full">Mon, 21 Jul</div>
+          <div class="date-display-today-badge d-none" id="today-badge">Today</div>
+        </div>
+        <button class="date-nav-btn" id="btn-next-day"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <div class="attendance-day-summary" id="day-summary">
+        <div class="day-summary-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--text-tertiary)"></div> <span id="sum-total">0</span> Total Lectures</div>
+        <div class="day-summary-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--color-success)"></div> <span id="sum-present">0</span> Present</div>
+        <div class="day-summary-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--color-danger)"></div> <span id="sum-absent">0</span> Absent</div>
+        <div class="day-summary-item"><div style="width:10px;height:10px;border-radius:50%;background:var(--color-warning)"></div> <span id="sum-cancelled">0</span> Cancelled</div>
+        <div style="flex:1"></div>
+        <button class="btn btn-ghost btn-sm" id="btn-mark-all-present"><i class="fa-solid fa-check-double"></i> Mark All Present</button>
+      </div>
+
+      <div id="attendance-list" class="stagger-children"></div>
+      
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

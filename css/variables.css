@@ -1,0 +1,212 @@
+/* ============================================================
+   SMART ATTENDANCE MANAGER — DESIGN TOKENS
+   All CSS custom properties (variables) live here.
+   Never hardcode colors/spacing elsewhere.
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors ────────────────────────────────────── */
+  --color-primary:        #6C63FF;
+  --color-primary-light:  #8B84FF;
+  --color-primary-dark:   #4B44CC;
+  --color-primary-rgb:    108, 99, 255;
+
+  --color-secondary:      #FF6584;
+  --color-secondary-light:#FF8FA3;
+  --color-secondary-dark: #CC3D5A;
+  --color-secondary-rgb:  255, 101, 132;
+
+  --color-accent:         #43C6AC;
+  --color-accent-light:   #6DD5C0;
+  --color-accent-dark:    #2E9980;
+  --color-accent-rgb:     67, 198, 172;
+
+  /* ── Semantic Colors ─────────────────────────────────── */
+  --color-success:        #4CAF50;
+  --color-success-light:  #A5D6A7;
+  --color-success-dark:   #388E3C;
+  --color-success-rgb:    76, 175, 80;
+
+  --color-warning:        #FF9800;
+  --color-warning-light:  #FFCC80;
+  --color-warning-dark:   #E65100;
+  --color-warning-rgb:    255, 152, 0;
+
+  --color-danger:         #F44336;
+  --color-danger-light:   #EF9A9A;
+  --color-danger-dark:    #C62828;
+  --color-danger-rgb:     244, 67, 54;
+
+  --color-info:           #29B6F6;
+  --color-info-rgb:       41, 182, 246;
+
+  /* ── Surface Colors (Dark Theme default) ─────────────── */
+  --bg-body:              #0A0A14;
+  --bg-surface:           #12121F;
+  --bg-card:              #1A1A2E;
+  --bg-card-2:            #16213E;
+  --bg-input:             #0F0F20;
+  --bg-overlay:           rgba(10, 10, 20, 0.85);
+  --bg-sidebar:           #12121F;
+  --bg-nav:               rgba(18, 18, 31, 0.9);
+  --bg-modal:             #1A1A2E;
+
+  /* ── Text Colors ─────────────────────────────────────── */
+  --text-primary:         #E8E8FF;
+  --text-secondary:       #9090B8;
+  --text-tertiary:        #5A5A80;
+  --text-inverse:         #0A0A14;
+  --text-on-primary:      #FFFFFF;
+  --text-link:            #6C63FF;
+
+  /* ── Border Colors ───────────────────────────────────── */
+  --border-color:         rgba(108, 99, 255, 0.15);
+  --border-color-strong:  rgba(108, 99, 255, 0.35);
+  --border-input:         rgba(255, 255, 255, 0.08);
+
+  /* ── Gradients ───────────────────────────────────────── */
+  --gradient-primary:     linear-gradient(135deg, #6C63FF 0%, #4B44CC 100%);
+  --gradient-secondary:   linear-gradient(135deg, #FF6584 0%, #CC3D5A 100%);
+  --gradient-accent:      linear-gradient(135deg, #43C6AC 0%, #2E9980 100%);
+  --gradient-hero:        linear-gradient(135deg, #6C63FF 0%, #43C6AC 100%);
+  --gradient-warm:        linear-gradient(135deg, #FF6584 0%, #FF9800 100%);
+  --gradient-cool:        linear-gradient(135deg, #29B6F6 0%, #6C63FF 100%);
+  --gradient-success:     linear-gradient(135deg, #4CAF50 0%, #43C6AC 100%);
+  --gradient-card:        linear-gradient(145deg, rgba(26,26,46,0.9), rgba(22,33,62,0.7));
+
+  /* ── Glassmorphism ───────────────────────────────────── */
+  --glass-bg:             rgba(255, 255, 255, 0.03);
+  --glass-border:         rgba(255, 255, 255, 0.07);
+  --glass-blur:           blur(20px);
+  --glass-bg-strong:      rgba(255, 255, 255, 0.07);
+
+  /* ── Shadows ─────────────────────────────────────────── */
+  --shadow-sm:            0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md:            0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg:            0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-xl:            0 16px 64px rgba(0, 0, 0, 0.6);
+  --shadow-primary:       0 4px 24px rgba(108, 99, 255, 0.35);
+  --shadow-secondary:     0 4px 24px rgba(255, 101, 132, 0.35);
+  --shadow-success:       0 4px 24px rgba(76, 175, 80, 0.3);
+  --shadow-card:          0 4px 24px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.04);
+
+  /* ── Spacing Scale ───────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* ── Border Radius ───────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   18px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-full: 9999px;
+
+  /* ── Typography ──────────────────────────────────────── */
+  --font-family:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:      'Roboto Mono', 'Fira Code', 'Consolas', monospace;
+
+  --font-size-xs:   11px;
+  --font-size-sm:   13px;
+  --font-size-base: 15px;
+  --font-size-md:   16px;
+  --font-size-lg:   18px;
+  --font-size-xl:   20px;
+  --font-size-2xl:  24px;
+  --font-size-3xl:  30px;
+  --font-size-4xl:  36px;
+  --font-size-5xl:  48px;
+
+  --font-weight-normal:    400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
+  --line-height-tight:  1.2;
+  --line-height-normal: 1.5;
+  --line-height-loose:  1.8;
+
+  /* ── Transitions ─────────────────────────────────────── */
+  --transition-fast:    150ms ease;
+  --transition-normal:  250ms ease;
+  --transition-slow:    400ms ease;
+  --transition-spring:  300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth:  600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Z-Index Scale ───────────────────────────────────── */
+  --z-behind:   -1;
+  --z-base:      0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-modal:    300;
+  --z-toast:    400;
+  --z-tooltip:  500;
+
+  /* ── Layout ──────────────────────────────────────────── */
+  --sidebar-width:        260px;
+  --sidebar-collapsed:    70px;
+  --header-height:        64px;
+  --bottom-nav-height:    70px;
+  --content-max-width:    1200px;
+  --card-padding:         var(--space-6);
+  --page-padding:         var(--space-6);
+
+  /* ── Subject Colors (palette) ────────────────────────── */
+  --subject-color-1: #6C63FF;
+  --subject-color-2: #FF6584;
+  --subject-color-3: #43C6AC;
+  --subject-color-4: #FF9800;
+  --subject-color-5: #29B6F6;
+  --subject-color-6: #AB47BC;
+  --subject-color-7: #EF5350;
+  --subject-color-8: #26A69A;
+  --subject-color-9: #FFA726;
+  --subject-color-10: #EC407A;
+}
+
+/* ── Light Theme Overrides ────────────────────────────────── */
+[data-theme="light"] {
+  --bg-body:          #F0F2FF;
+  --bg-surface:       #FFFFFF;
+  --bg-card:          #FFFFFF;
+  --bg-card-2:        #F8F9FF;
+  --bg-input:         #F0F2FF;
+  --bg-overlay:       rgba(240, 242, 255, 0.9);
+  --bg-sidebar:       #FFFFFF;
+  --bg-nav:           rgba(255, 255, 255, 0.92);
+  --bg-modal:         #FFFFFF;
+
+  --text-primary:     #1A1A2E;
+  --text-secondary:   #5A5A80;
+  --text-tertiary:    #9090B8;
+  --text-inverse:     #FFFFFF;
+
+  --border-color:       rgba(108, 99, 255, 0.12);
+  --border-color-strong: rgba(108, 99, 255, 0.25);
+  --border-input:       rgba(0, 0, 0, 0.08);
+
+  --glass-bg:           rgba(255, 255, 255, 0.7);
+  --glass-border:       rgba(108, 99, 255, 0.1);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.85);
+
+  --shadow-sm:          0 2px 8px rgba(108, 99, 255, 0.08);
+  --shadow-md:          0 4px 20px rgba(108, 99, 255, 0.12);
+  --shadow-lg:          0 8px 40px rgba(108, 99, 255, 0.16);
+  --shadow-xl:          0 16px 64px rgba(108, 99, 255, 0.2);
+  --shadow-card:        0 4px 24px rgba(108,99,255,0.1), 0 1px 0 rgba(255,255,255,0.9);
+
+  --gradient-card:      linear-gradient(145deg, rgba(255,255,255,0.95), rgba(240,242,255,0.8));
+  --bg-overlay:         rgba(240, 242, 255, 0.85);
+}

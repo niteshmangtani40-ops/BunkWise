@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timetable — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/timetable.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Timetable</div>
+          <div class="page-subtitle">Your weekly schedule</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <button class="btn btn-primary btn-sm" id="btn-add-slot">
+          <i class="fa-solid fa-plus"></i> Add Slot
+        </button>
+      </div>
+    </header>
+    <div class="page-body">
+      <div class="timetable-grid" id="tt-grid"></div>
+      <div class="timetable-compact stagger-children" id="tt-compact"></div>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="slot-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="slot-modal-title">Add Timetable Slot</h3>
+      <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="slot-id" />
+      <div class="form-group">
+        <label class="form-label">Day</label>
+        <select class="form-select" id="slot-day">
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <select class="form-select" id="slot-subject"></select>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Start Time</label>
+          <input class="form-input" type="time" id="slot-start" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">End Time</label>
+          <input class="form-input" type="time" id="slot-end" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Room / Location (optional)</label>
+        <input class="form-input" type="text" id="slot-room" placeholder="e.g. Room 101" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger d-none" id="btn-del-slot">Delete</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost modal-close-btn">Cancel</button>
+      <button class="btn btn-primary" id="slot-save">Save Slot</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

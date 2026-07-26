@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About BunkWise — version, privacy, changelog, and project details." />
+  <meta name="theme-color" content="#6C63FF" />
+  <title>About — BunkWise</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">About</div>
+          <div class="page-subtitle">App info, privacy, and changelog</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="grid grid-2" style="gap:var(--space-6)">
+        <section class="card">
+          <div class="card-header"><div class="card-title"><i class="fa-solid fa-circle-info"></i> App Details</div></div>
+          <div class="empty-state" style="padding:var(--space-5)">
+            <div class="empty-state-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h3>BunkWise</h3>
+            <p>Version <span id="about-version">1.0.0</span></p>
+          </div>
+          <div class="grid grid-2" style="gap:var(--space-3);margin-top:var(--space-4)">
+            <div class="dash-stat-card"><div class="dash-stat-label">Developer</div><div class="dash-stat-value" style="font-size:18px" id="about-developer">Open Source</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-label">Tech Stack</div><div class="dash-stat-value" style="font-size:18px">HTML, CSS, JS</div></div>
+          </div>
+        </section>
+
+        <section class="stagger-children">
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</div></div>
+            <p style="color:var(--text-secondary);line-height:1.7">BunkWise stores your data locally in IndexedDB on your device. No attendance or profile data is sent to a backend server.</p>
+          </div>
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-code-branch"></i> Changelog</div></div>
+            <ul style="color:var(--text-secondary);line-height:1.8;padding-left:18px;margin:0">
+              <li>Production-ready import wizard.</li>
+              <li>Calendar, profile, and about pages restored.</li>
+              <li>Offline PWA improvements and icon fixes.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fa-brands fa-github"></i> GitHub</div></div>
+            <p style="color:var(--text-secondary)">GitHub link placeholder: <a href="#" aria-label="GitHub repository placeholder">Add repository URL</a></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

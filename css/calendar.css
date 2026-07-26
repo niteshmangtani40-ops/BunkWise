@@ -1,0 +1,229 @@
+/* Calendar page styles */
+
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 10px;
+}
+
+.calendar-day-head {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--text-tertiary);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	text-align: center;
+}
+
+.calendar-day {
+	min-height: 92px;
+	padding: 10px;
+	border-radius: 16px;
+	border: 1px solid var(--border-color);
+	background: var(--gradient-card);
+	color: var(--text-primary);
+	text-align: left;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.calendar-day:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-md);
+	border-color: var(--border-color-strong);
+}
+
+.calendar-day.today {
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 1px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.calendar-day.selected {
+	background: rgba(var(--color-primary-rgb), 0.08);
+}
+
+.calendar-day.blank {
+	background: transparent;
+	border-style: dashed;
+	min-height: 92px;
+}
+
+.calendar-day-number {
+	font-size: 14px;
+	font-weight: 800;
+	margin-bottom: 4px;
+}
+
+.calendar-day-meta {
+	font-size: 12px;
+	color: var(--text-secondary);
+	margin-bottom: 8px;
+}
+
+.calendar-dots {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.calendar-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 999px;
+	display: inline-block;
+}
+
+.calendar-dot.present { background: var(--color-success); }
+.calendar-dot.absent { background: var(--color-danger); }
+.calendar-dot.cancelled { background: var(--color-warning); }
+.calendar-dot.holiday { background: var(--color-info); }
+
+@media (max-width: 768px) {
+	.calendar-grid {
+		gap: 8px;
+	}
+
+	.calendar-day {
+		min-height: 78px;
+		padding: 8px;
+	}
+}
+
+/* Monthly Stats Grid */
+.monthly-stats-grid {
+	grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 992px) {
+	.monthly-stats-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 576px) {
+	.monthly-stats-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Day cell states */
+.calendar-day.present {
+	border-color: var(--color-success-dark);
+	background: rgba(var(--color-success-rgb), 0.08);
+}
+
+.calendar-day.absent {
+	border-color: var(--color-danger-dark);
+	background: rgba(var(--color-danger-rgb), 0.08);
+}
+
+.calendar-day.holiday {
+	border-color: var(--color-info);
+	background: rgba(var(--color-info-rgb), 0.08);
+}
+
+.calendar-day.no-classes {
+	border: 1px dashed var(--border-color);
+	background: transparent;
+	opacity: 0.8;
+}
+
+.calendar-day.future {
+	opacity: 0.5;
+	border-color: var(--border-color);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.calendar-day.future:hover {
+	opacity: 0.8;
+	transform: translateY(-2px);
+}
+
+/* Modal attendance details styling */
+.modal-class-card {
+	padding: var(--space-4);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	background: var(--bg-card);
+	margin-bottom: var(--space-3);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+	transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.modal-class-card:hover {
+	border-color: var(--border-color-strong);
+}
+
+.modal-class-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.modal-class-info {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.modal-class-subject {
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--text-primary);
+}
+
+.modal-class-faculty, .modal-class-room {
+	font-size: 13px;
+	color: var(--text-secondary);
+}
+
+.modal-class-actions {
+	display: flex;
+	gap: var(--space-2);
+	margin-top: var(--space-1);
+}
+
+.status-badge {
+	padding: 4px 10px;
+	border-radius: var(--radius-full);
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	display: inline-block;
+}
+
+.status-badge.present {
+	background: rgba(var(--color-success-rgb), 0.15);
+	color: var(--color-success-light);
+}
+
+.status-badge.absent {
+	background: rgba(var(--color-danger-rgb), 0.15);
+	color: var(--color-danger-light);
+}
+
+.status-badge.cancelled {
+	background: rgba(var(--color-warning-rgb), 0.15);
+	color: var(--color-warning-light);
+}
+
+.status-badge.holiday {
+	background: rgba(var(--color-info-rgb), 0.15);
+	color: var(--color-info);
+}
+
+.status-badge.unmarked {
+	background: var(--border-color);
+	color: var(--text-secondary);
+}
+
+.btn-warning {
+	background: var(--color-warning);
+	color: white;
+}
+.btn-warning:hover {
+	background: var(--color-warning-dark);
+}
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BunkWise Profile — edit your student profile and view attendance statistics." />
+  <meta name="theme-color" content="#6C63FF" />
+  <title>Profile — BunkWise</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Profile</div>
+          <div class="page-subtitle">Manage your student details</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="grid grid-2" style="gap:var(--space-6)">
+        <section class="card stagger-children">
+          <div class="card-header"><div class="card-title"><i class="fa-solid fa-user"></i> Profile Summary</div></div>
+          <div class="profile-hero" style="text-align:center;padding:var(--space-5) 0">
+            <div class="avatar" id="profile-avatar" style="width:96px;height:96px;font-size:34px;margin:0 auto var(--space-4)">BW</div>
+            <div style="font-size:26px;font-weight:800" id="profile-name">Student</div>
+            <div style="color:var(--text-secondary);margin-top:4px" id="profile-college">My College</div>
+            <div style="color:var(--text-tertiary);font-size:13px;margin-top:4px" id="profile-semester">Semester —</div>
+          </div>
+
+          <div class="grid grid-2" style="gap:var(--space-3);margin-bottom:var(--space-5)">
+            <div class="dash-stat-card"><div class="dash-stat-value" id="profile-target">75%</div><div class="dash-stat-label">Target</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="profile-attendance">0%</div><div class="dash-stat-label">Attendance</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="profile-subjects">0</div><div class="dash-stat-label">Subjects</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="profile-streak">0</div><div class="dash-stat-label">Streak</div></div>
+          </div>
+        </section>
+
+        <section class="card stagger-children">
+          <div class="card-header"><div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</div></div>
+          <div class="form-group"><label class="form-label" for="profile-input-name">Name</label><input class="form-input" id="profile-input-name" maxlength="60" /></div>
+          <div class="form-group"><label class="form-label" for="profile-input-college">College</label><input class="form-input" id="profile-input-college" maxlength="80" /></div>
+          <div class="form-group"><label class="form-label" for="profile-input-semester">Semester</label><input class="form-input" id="profile-input-semester" maxlength="20" /></div>
+          <div class="form-group"><label class="form-label" for="profile-input-target">Attendance Target</label><input class="form-input" id="profile-input-target" type="number" min="1" max="100" /></div>
+          <div class="form-group"><label class="form-label" for="profile-input-rollno">Roll No</label><input class="form-input" id="profile-input-rollno" maxlength="40" /></div>
+          <button class="btn btn-primary btn-block" id="profile-save-btn"><i class="fa-solid fa-floppy-disk"></i> Save Profile</button>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

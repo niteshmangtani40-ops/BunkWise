@@ -1,0 +1,210 @@
+/* ============================================================
+   SMART ATTENDANCE MANAGER — ATTENDANCE PAGE CSS
+   ============================================================ */
+
+.attendance-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.date-nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 16px;
+}
+
+.date-nav-btn:hover {
+  background: var(--glass-bg-strong);
+  color: var(--text-primary);
+}
+
+.date-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.date-display {
+  text-align: center;
+  cursor: pointer;
+}
+
+.date-display-day {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.date-display-full {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.date-display-today-badge {
+  display: inline-block;
+  background: rgba(var(--color-primary-rgb), 0.15);
+  color: var(--color-primary-light);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+}
+
+/* Attendance Subject Row */
+.attendance-subject-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  background: var(--gradient-card);
+  margin-bottom: var(--space-4);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.attendance-subject-row.marked-present {
+  border-color: rgba(var(--color-success-rgb), 0.4);
+  background: rgba(var(--color-success-rgb), 0.04);
+}
+
+.attendance-subject-row.marked-absent {
+  border-color: rgba(var(--color-danger-rgb), 0.4);
+  background: rgba(var(--color-danger-rgb), 0.04);
+}
+
+.attendance-subject-row.marked-cancelled {
+  border-color: rgba(var(--color-warning-rgb), 0.4);
+  background: rgba(var(--color-warning-rgb), 0.04);
+}
+
+.att-subject-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.att-subject-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.att-subject-pct {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Mark buttons */
+.att-mark-btns {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.att-mark-btn {
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background: var(--glass-bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 10px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.att-mark-btn.present:hover, .att-mark-btn.present.active {
+  background: rgba(var(--color-success-rgb), 0.15);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.att-mark-btn.absent:hover, .att-mark-btn.absent.active {
+  background: rgba(var(--color-danger-rgb), 0.15);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.att-mark-btn.cancelled:hover, .att-mark-btn.cancelled.active {
+  background: rgba(var(--color-warning-rgb), 0.15);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.att-mark-btn.undo:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--border-color-strong);
+  color: var(--text-primary);
+}
+
+/* Mini progress bar inline */
+.att-mini-progress {
+  width: 60px;
+  height: 4px;
+  background: var(--bg-input);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.att-mini-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+/* Attendance summary bar */
+.attendance-day-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.day-summary-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 600px) {
+  .att-mark-btns { gap: 4px; }
+  .att-mark-btn { padding: 0 8px; font-size: 12px; }
+  .attendance-subject-row { flex-wrap: wrap; }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>./index.html</loc></url>
+  <url><loc>./dashboard.html</loc></url>
+  <url><loc>./subjects.html</loc></url>
+  <url><loc>./timetable.html</loc></url>
+  <url><loc>./attendance.html</loc></url>
+  <url><loc>./calendar.html</loc></url>
+  <url><loc>./reports.html</loc></url>
+  <url><loc>./calculator.html</loc></url>
+  <url><loc>./profile.html</loc></url>
+  <url><loc>./settings.html</loc></url>
+  <url><loc>./about.html</loc></url>
+</urlset>

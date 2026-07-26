@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/reports.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Reports</div>
+          <div class="page-subtitle">Detailed attendance analytics</div>
+        </div>
+      </div>
+    </header>
+    <div class="page-body">
+      
+      <div class="grid grid-2" style="gap:var(--space-6)">
+
+        <div class="card stagger-children" style="grid-column:1/-1;">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-table-cells-large"></i> Attendance Heatmap</div>
+            <div class="heatmap-toolbar">
+              <button class="btn btn-ghost btn-sm heatmap-view-btn active" data-heatmap-view="month">Monthly</button>
+              <button class="btn btn-ghost btn-sm heatmap-view-btn" data-heatmap-view="semester">Semester</button>
+              <button class="btn btn-ghost btn-sm heatmap-view-btn" data-heatmap-view="year">Year</button>
+            </div>
+          </div>
+
+          <div class="heatmap-controls">
+            <div class="heatmap-nav-group">
+              <button class="btn btn-ghost btn-sm" id="heatmap-prev"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn btn-ghost btn-sm" id="heatmap-today">Today</button>
+              <button class="btn btn-ghost btn-sm" id="heatmap-next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="heatmap-select-group">
+              <select class="form-select" id="heatmap-month"></select>
+              <select class="form-select" id="heatmap-year"></select>
+            </div>
+          </div>
+
+          <div class="heatmap-summary-grid stagger-children">
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-total-classes">0</div><div class="dash-stat-label">Total Classes</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-attendance-pct">0%</div><div class="dash-stat-label">Attendance %</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-present">0</div><div class="dash-stat-label">Present</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-absent">0</div><div class="dash-stat-label">Absent</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-cancelled">0</div><div class="dash-stat-label">Cancelled</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-holiday">0</div><div class="dash-stat-label">Holiday</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-longest-present">0</div><div class="dash-stat-label">Longest Present Streak</div></div>
+            <div class="dash-stat-card"><div class="dash-stat-value" id="heatmap-longest-absent">0</div><div class="dash-stat-label">Longest Absent Streak</div></div>
+          </div>
+
+          <div class="heatmap-legend">
+            <span><i class="legend-swatch present"></i> Present</span>
+            <span><i class="legend-swatch absent"></i> Absent</span>
+            <span><i class="legend-swatch holiday"></i> Holiday</span>
+            <span><i class="legend-swatch noclass"></i> No Class</span>
+            <span><i class="legend-swatch today"></i> Today</span>
+          </div>
+
+          <div id="attendance-heatmap" class="attendance-heatmap"></div>
+          <div class="heatmap-footer">
+            <div id="heatmap-summary-label">Loading heatmap…</div>
+            <div id="heatmap-current-range"></div>
+          </div>
+          <div id="heatmap-day-details" class="history-empty-card" style="margin-top:var(--space-4)">
+            <h3 style="margin-bottom:8px">Select a day</h3>
+            <p style="color:var(--text-secondary)">Click any day square to inspect attendance details.</p>
+          </div>
+        </div>
+        
+        <div class="card stagger-children" style="grid-column: 1 / -1;">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-chart-line"></i> Overall Trend</div>
+          </div>
+          <div style="height:300px;width:100%;position:relative;">
+            <canvas id="trend-chart"></canvas>
+          </div>
+        </div>
+        
+        <div class="card stagger-children">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-chart-pie"></i> Attendance Breakdown</div>
+          </div>
+          <div style="height:250px;width:100%;position:relative;display:flex;justify-content:center;">
+            <canvas id="pie-chart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Projections & Predictions Table -->
+        <div class="card stagger-children" style="grid-column: 1 / -1;">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-compass"></i> Projections & Predictions</div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:14px;">
+              <thead>
+                <tr style="border-bottom:2px solid var(--border-color); color:var(--text-secondary); text-transform:uppercase; font-size:11px; letter-spacing:0.06em;">
+                  <th style="padding:var(--space-3)">Subject</th>
+                  <th style="padding:var(--space-3); text-align:center;">Current</th>
+                  <th style="padding:var(--space-3); text-align:center;">Target</th>
+                  <th style="padding:var(--space-3); text-align:center;">Status</th>
+                  <th style="padding:var(--space-3); text-align:center;">Safe Bunks</th>
+                  <th style="padding:var(--space-3); text-align:center;">Needed</th>
+                  <th style="padding:var(--space-3); text-align:center;">Projected Sem</th>
+                  <th style="padding:var(--space-3); text-align:center;">Trend</th>
+                </tr>
+              </thead>
+              <tbody id="reports-prediction-table-body">
+                <tr>
+                  <td colspan="8" style="padding:var(--space-4); text-align:center; color:var(--text-secondary);">Loading calculations...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card stagger-children">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-file-export"></i> Export Report</div>
+          </div>
+          <p style="color:var(--text-secondary);font-size:14px;margin-bottom:var(--space-4)">Download a CSV report of your attendance for sharing, or print/save a PDF file.</p>
+          <div style="display:flex;gap:var(--space-3)">
+            <button class="btn btn-primary" id="btn-export-csv" style="flex:1"><i class="fa-solid fa-file-csv"></i> Download CSV</button>
+            <button class="btn btn-ghost" id="btn-print-pdf" style="flex:1"><i class="fa-solid fa-print"></i> Print / PDF</button>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Settings</div>
+          <div class="page-subtitle">Configure your app</div>
+        </div>
+      </div>
+    </header>
+    <div class="page-body">
+      
+      <div class="grid grid-2" style="gap:var(--space-6)">
+        
+        <div class="stagger-children">
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-user"></i> Profile</div></div>
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-input" id="set-name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">College</label>
+              <input type="text" class="form-input" id="set-college" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <input type="text" class="form-input" id="set-semester" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Default Target Attendance (%)</label>
+              <input type="number" class="form-input" id="set-target" />
+            </div>
+            <button class="btn btn-primary btn-block" id="btn-save-profile">Save Profile</button>
+          </div>
+          
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-palette"></i> Appearance</div></div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">Theme</label>
+              <select class="form-select" id="set-theme">
+                <option value="dark">Dark Mode (Default)</option>
+                <option value="light">Light Mode</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stagger-children">
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-database"></i> Data Management</div></div>
+            <p style="color:var(--text-secondary);font-size:14px;margin-bottom:var(--space-4)">Backup your data or start fresh.</p>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+              <button class="btn btn-success" id="btn-create-backup"><i class="fa-solid fa-cloud-arrow-up"></i> Create Backup Snapshot</button>
+              <button class="btn btn-ghost" id="btn-export"><i class="fa-solid fa-file-export"></i> Export Data (JSON)</button>
+              <label class="btn btn-ghost" style="cursor:pointer;display:flex;justify-content:center"><i class="fa-solid fa-file-import"></i> Import Data<input type="file" id="btn-import" accept=".json" style="display:none"></label>
+              <button class="btn btn-ghost text-danger" id="btn-reset" style="border-color:rgba(244,67,54,0.3)"><i class="fa-solid fa-triangle-exclamation"></i> Reset All Data</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Backup History</div></div>
+            <div id="backup-history" class="stagger-children"></div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-circle-info"></i> About</div></div>
+            <div style="text-align:center;padding:var(--space-4) 0">
+              <div style="font-size:48px;color:var(--color-primary-light);margin-bottom:var(--space-3)"><i class="fa-solid fa-graduation-cap"></i></div>
+              <h3 style="margin-bottom:4px">BunkWise</h3>
+              <p style="color:var(--text-tertiary);font-size:14px;margin-bottom:var(--space-4)">Version 1.0.0 • Offline Ready PWA</p>
+              <p style="font-size:12px;color:var(--text-secondary)">Built entirely in the browser using IndexedDB.<br/>No servers, no tracking, complete privacy.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

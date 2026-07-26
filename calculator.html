@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bunk Calculator — BunkWise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <style>
+    .calc-card { padding: var(--space-6); border-radius: var(--radius-2xl); background: var(--gradient-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); text-align: center; }
+    .calc-title { font-size: var(--font-size-2xl); font-weight: 800; margin-bottom: var(--space-2); }
+    .calc-result { font-size: 3rem; font-weight: 800; background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; margin: var(--space-4) 0; }
+    .calc-msg { font-size: var(--font-size-base); color: var(--text-secondary); margin-bottom: var(--space-6); }
+    .calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); text-align: left; }
+    .calc-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin-top: var(--space-5); }
+    .calc-metric { padding: var(--space-4); border: 1px solid var(--border-color); border-radius: var(--radius-xl); background: var(--glass-bg); text-align: left; }
+    .calc-metric-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 6px; }
+    .calc-metric-value { font-size: 22px; font-weight: 800; color: var(--text-primary); }
+    .calc-gauge { height: 12px; border-radius: 999px; background: rgba(var(--color-primary-rgb),0.08); overflow:hidden; margin-top: var(--space-3); }
+    .calc-gauge > div { height: 100%; width: 0%; border-radius: inherit; transition: width 0.35s ease; }
+    .calc-suggestions { margin-top: var(--space-4); font-size: 13px; color: var(--text-secondary); line-height: 1.6; text-align: left; }
+    .prediction-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--space-3); }
+    .prediction-card { padding: var(--space-4); border-radius: var(--radius-xl); border:1px solid var(--border-color); background: var(--gradient-card); box-shadow: var(--shadow-card); }
+    .prediction-card-title { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+    .prediction-card-value { font-size: 28px; font-weight: 900; color: var(--text-primary); line-height: 1; }
+    .prediction-card-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; }
+    .simulator-row { display:grid; grid-template-columns: 1fr auto; gap: var(--space-3); align-items:center; }
+    .simulator-value { font-size: 18px; font-weight: 800; color: var(--text-primary); min-width: 40px; text-align:right; }
+    .prediction-list { display:grid; gap: var(--space-3); }
+    .prediction-subject-card { padding: var(--space-4); border-radius: var(--radius-xl); border:1px solid var(--border-color); background: var(--glass-bg); }
+    .prediction-subject-top { display:flex; justify-content:space-between; gap: var(--space-3); align-items:flex-start; margin-bottom: var(--space-3); }
+    .prediction-subject-name { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+    .prediction-subject-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+    .prediction-status-chip { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; font-size:12px; font-weight:700; width:fit-content; }
+    .prediction-subject-grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-2); }
+    .prediction-subject-stat { padding: 10px 12px; border-radius: var(--radius-lg); background: rgba(var(--color-primary-rgb),0.05); border: 1px solid var(--border-color); }
+    .prediction-subject-stat span { display:block; font-size:11px; color:var(--text-tertiary); margin-bottom: 4px; }
+    .prediction-subject-stat strong { font-size:16px; color:var(--text-primary); }
+    .prediction-bars { display:grid; gap: var(--space-2); margin-top: var(--space-3); }
+    .prediction-bar { height: 10px; border-radius: 999px; background: rgba(var(--color-primary-rgb),0.08); overflow:hidden; }
+    .prediction-bar > div { height:100%; border-radius:inherit; transition: width 0.35s ease; }
+    .prediction-insight { padding: var(--space-3); border-radius: var(--radius-lg); background: var(--glass-bg); border: 1px solid var(--glass-border); font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    @media(max-width: 480px) { .calc-inputs, .calc-metrics { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .prediction-grid, .prediction-subject-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Calculator</div>
+          <div class="page-subtitle">Plan your bunks safely</div>
+        </div>
+      </div>
+    </header>
+    <div class="page-body">
+      
+      <div class="grid grid-2">
+        <div class="calc-card stagger-children">
+          <div class="calc-title">Bunk Calculator</div>
+          <p style="color:var(--text-tertiary);margin-bottom:var(--space-6)">Find out how many classes you can skip or need to attend to maintain your target.</p>
+          
+          <div class="calc-inputs">
+            <div class="form-group">
+              <label class="form-label">Attended Classes</label>
+              <input type="number" class="form-input" id="calc-attended" value="0" min="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Classes</label>
+              <input type="number" class="form-input" id="calc-total" value="0" min="0" />
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1">
+              <label class="form-label">Target Attendance (%)</label>
+              <input type="number" class="form-input" id="calc-target" value="75" min="1" max="100" />
+            </div>
+          </div>
+          
+          <div class="calc-result" id="calc-res-val">—</div>
+          <div class="calc-msg" id="calc-res-msg">Enter your stats to see if you can bunk.</div>
+          <div class="calc-gauge" aria-label="Attendance gauge"><div id="calc-gauge"></div></div>
+
+          <div class="calc-metrics">
+            <div class="calc-metric"><div class="calc-metric-label">Risk Level</div><div class="calc-metric-value" id="calc-risk">—</div></div>
+            <div class="calc-metric"><div class="calc-metric-label">Expected %</div><div class="calc-metric-value" id="calc-expected">—</div></div>
+            <div class="calc-metric"><div class="calc-metric-label">Safe Bunks</div><div class="calc-metric-value" id="calc-safe-bunks">—</div></div>
+          </div>
+
+          <div class="calc-suggestions" id="calc-suggestions">Enter attendance stats to see suggestions.</div>
+          
+        </div>
+        
+        <div class="stagger-children">
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-bolt"></i> Quick Select Subject</div></div>
+            <div class="form-group" style="margin-bottom:0">
+              <select class="form-select" id="calc-subject-select">
+                <option value="">-- Choose a subject --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-chart-line"></i> Prediction Cards</div></div>
+            <div class="prediction-grid" id="prediction-cards"></div>
+          </div>
+
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-sliders"></i> Prediction Simulator</div></div>
+            <div class="prediction-insight" id="prediction-insight">Use the sliders to simulate future attendance.</div>
+            <div class="form-group" style="margin-top:var(--space-4)">
+              <div class="simulator-row"><label class="form-label" for="sim-lectures">Future Lectures</label><div class="simulator-value" id="sim-lectures-val">5</div></div>
+              <input type="range" id="sim-lectures" min="0" max="50" value="5" />
+            </div>
+            <div class="form-group">
+              <div class="simulator-row"><label class="form-label" for="sim-absences">Future Absences</label><div class="simulator-value" id="sim-absences-val">0</div></div>
+              <input type="range" id="sim-absences" min="0" max="20" value="0" />
+            </div>
+            <div class="prediction-card" style="margin-top:var(--space-2)">
+              <div class="prediction-card-title">Simulated Attendance</div>
+              <div class="prediction-card-value" id="sim-result">—</div>
+              <div class="prediction-card-sub" id="sim-result-sub">Adjust the sliders to preview the impact.</div>
+              <div class="progress-bar-container" style="margin-top:var(--space-3)"><div class="progress-bar animated" id="sim-result-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-layer-group"></i> Subject Predictions</div></div>
+            <div id="subject-predictions" class="prediction-list"></div>
+          </div>
+          
+          <div class="card">
+             <div class="card-header"><div class="card-title"><i class="fa-solid fa-lightbulb"></i> Pro Tip</div></div>
+             <p style="color:var(--text-secondary);font-size:14px;line-height:1.6">
+               Maintaining a buffer above your target is highly recommended. Unexpected emergencies can cause your attendance to drop rapidly. Try aiming 5% higher than your strict minimum!
+             </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

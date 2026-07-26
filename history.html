@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BunkWise Attendance History — browse, filter, edit, and manage your attendance timeline offline." />
+  <meta name="theme-color" content="#6C63FF" />
+  <title>History — BunkWise</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/history.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Attendance History</div>
+          <div class="page-subtitle" id="history-subtitle">Timeline of local attendance records</div>
+        </div>
+      </div>
+      <div class="page-header-right history-actions">
+        <button class="btn btn-ghost btn-sm" id="history-undo"><i class="fa-solid fa-rotate-left"></i> Undo Last Change</button>
+        <button class="btn btn-ghost btn-sm" id="history-clear-filters"><i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="grid grid-4 history-summary-grid stagger-children" style="margin-bottom:var(--space-6)">
+        <div class="dash-stat-card"><div class="dash-stat-value" id="history-total">0</div><div class="dash-stat-label">Records</div></div>
+        <div class="dash-stat-card"><div class="dash-stat-value" id="history-present">0</div><div class="dash-stat-label">Present</div></div>
+        <div class="dash-stat-card"><div class="dash-stat-value" id="history-absent">0</div><div class="dash-stat-label">Absent</div></div>
+        <div class="dash-stat-card"><div class="dash-stat-value" id="history-cancelled">0</div><div class="dash-stat-label">Cancelled</div></div>
+      </div>
+
+      <section class="card history-filters-card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-sliders"></i> Filters</div>
+        </div>
+        <div class="history-filters-grid">
+          <div class="form-group">
+            <label class="form-label" for="history-search">Search</label>
+            <input class="form-input" id="history-search" type="search" placeholder="Subject, note, status..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="history-subject">Subject</label>
+            <select class="form-select" id="history-subject"><option value="">All subjects</option></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="history-status">Status</label>
+            <select class="form-select" id="history-status">
+              <option value="">All statuses</option>
+              <option value="present">Present</option>
+              <option value="absent">Absent</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="holiday">Holiday</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="history-date">Date</label>
+            <input class="form-input" id="history-date" type="date" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="history-month">Month</label>
+            <input class="form-input" id="history-month" type="month" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="history-semester">Semester</label>
+            <select class="form-select" id="history-semester"><option value="">All semesters</option></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card history-toolbar-card" style="margin-top:var(--space-5)">
+        <div class="history-toolbar-row">
+          <div>
+            <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Timeline</div>
+            <div class="history-toolbar-subtitle" id="history-count">Loading history…</div>
+          </div>
+          <div class="history-toolbar-actions">
+            <button class="btn btn-primary btn-sm" id="history-load-more"><i class="fa-solid fa-arrow-down"></i> Load More</button>
+            <button class="btn btn-danger btn-sm d-none" id="history-bulk-delete"><i class="fa-solid fa-trash-can"></i> Delete Selected (<span id="history-selected-count">0</span>)</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="history-empty" class="empty-state d-none" style="padding:var(--space-8);margin-top:var(--space-5)">
+        <div class="empty-state-icon"><i class="fa-solid fa-hourglass-empty"></i></div>
+        <h3>No attendance history</h3>
+        <p>Mark some classes to build a timeline here.</p>
+        <a href="./attendance.html" class="btn btn-primary">Go to Attendance</a>
+      </div>
+
+      <section id="history-list" class="history-list stagger-children" aria-live="polite"></section>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+
+<div class="modal-overlay" id="history-modal" aria-hidden="true">
+  <div class="modal history-modal" role="dialog" aria-modal="true" aria-label="Edit attendance record">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Attendance</h3>
+      <button class="modal-close" id="history-modal-close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="history-edit-meta" id="history-edit-meta"></div>
+      <div class="form-group">
+        <label class="form-label" for="history-edit-status">Status</label>
+        <select class="form-select" id="history-edit-status">
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="holiday">Holiday</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="history-edit-note">Notes</label>
+        <textarea class="form-textarea" id="history-edit-note" rows="4" placeholder="Optional notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="history-edit-cancel">Cancel</button>
+      <button class="btn btn-primary" id="history-edit-save">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

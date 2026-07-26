@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BunkWise Calendar — monthly attendance view with day details and statistics." />
+  <meta name="theme-color" content="#6C63FF" />
+  <title>Calendar — BunkWise</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div id="nav-container"></div>
+  <main class="main-content">
+    <header class="page-header">
+      <div class="page-header-left">
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="page-title">Calendar</div>
+          <div class="page-subtitle" id="calendar-subtitle">Monthly attendance view</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="grid grid-2" style="gap:var(--space-6)">
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-calendar-days"></i> Monthly Calendar</div>
+            <div style="display:flex;gap:var(--space-2)">
+              <button class="btn btn-ghost btn-sm" id="cal-prev" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="btn btn-ghost btn-sm" id="cal-today">Today</button>
+              <button class="btn btn-ghost btn-sm" id="cal-next" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div id="calendar-title" style="font-weight:700;margin-bottom:var(--space-3)"></div>
+          <div class="grid grid-5 monthly-stats-grid" style="gap:var(--space-2);margin-bottom:var(--space-4)">
+            <div class="dash-stat-card" style="padding:var(--space-2)">
+              <div class="dash-stat-value" id="month-total" style="font-size:1.2rem">0</div>
+              <div class="dash-stat-label" style="font-size:11px">Total Classes</div>
+            </div>
+            <div class="dash-stat-card" style="padding:var(--space-2)">
+              <div class="dash-stat-value" id="month-present" style="font-size:1.2rem">0</div>
+              <div class="dash-stat-label" style="font-size:11px">Present</div>
+            </div>
+            <div class="dash-stat-card" style="padding:var(--space-2)">
+              <div class="dash-stat-value" id="month-absent" style="font-size:1.2rem">0</div>
+              <div class="dash-stat-label" style="font-size:11px">Absent</div>
+            </div>
+            <div class="dash-stat-card" style="padding:var(--space-2)">
+              <div class="dash-stat-value" id="month-percentage" style="font-size:1.2rem">0%</div>
+              <div class="dash-stat-label" style="font-size:11px">Attendance %</div>
+            </div>
+            <div class="dash-stat-card" style="padding:var(--space-2)">
+              <div class="dash-stat-value" id="month-bunks" style="font-size:1.2rem">0</div>
+              <div class="dash-stat-label" style="font-size:11px">Bunks</div>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+        </section>
+
+        <section class="stagger-children">
+          <div class="card" style="margin-bottom:var(--space-5)">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-chart-pie"></i> Statistics (All-Time)</div></div>
+            <div class="grid grid-2" style="gap:var(--space-3)">
+              <div class="dash-stat-card"><div class="dash-stat-value" id="cal-present">0</div><div class="dash-stat-label">Present</div></div>
+              <div class="dash-stat-card"><div class="dash-stat-value" id="cal-absent">0</div><div class="dash-stat-label">Absent</div></div>
+              <div class="dash-stat-card"><div class="dash-stat-value" id="cal-cancelled">0</div><div class="dash-stat-label">Cancelled</div></div>
+              <div class="dash-stat-card"><div class="dash-stat-value" id="cal-holiday">0</div><div class="dash-stat-label">Holiday</div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fa-solid fa-circle-info"></i> Selected Day</div></div>
+            <div id="calendar-day-details" class="empty-state" style="padding:var(--space-5)">
+              <div class="empty-state-icon"><i class="fa-solid fa-calendar-day"></i></div>
+              <h3>Select a day</h3>
+              <p>Tap any calendar date to see attendance details.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div id="bottom-nav-container"></div>
+</div>
+
+<!-- Day Details Modal -->
+<div class="modal-overlay" id="day-details-modal-overlay">
+  <div class="modal" style="max-width: 580px;">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-date-title" style="font-size: 18px; font-weight: 700;">Date Details</div>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modal-day-details-body" style="max-height: 70vh; overflow-y: auto;">
+      <!-- Content populated dynamically -->
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

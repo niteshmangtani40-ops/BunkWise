@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Attendance Manager — Track your college attendance, calculate safe bunks, and never miss the 75% mark." />
+  <meta name="theme-color" content="#6C63FF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BunkWise" />
+
+  <title>Setup — BunkWise Smart Attendance Manager</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/icon-96.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/components.css" />
+  <link rel="stylesheet" href="./css/animations.css" />
+  <link rel="stylesheet" href="./css/wizard.css" />
+</head>
+<body>
+
+<!-- Background Orbs -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-3" aria-hidden="true"></div>
+
+<!-- ── Wizard Page ──────────────────────────────────────── -->
+<div class="wizard-page" id="wizard-page">
+  <div class="wizard-container" id="wizard-container">
+
+    <!-- Progress Indicators -->
+    <div class="wizard-progress" id="wizard-progress" aria-label="Setup progress">
+      <!-- Built dynamically by wizard.js -->
+    </div>
+
+    <!-- Step 1: Welcome -->
+    <div class="wizard-card" id="step-1" data-step="1">
+      <div class="wizard-welcome-graphic">
+        <div class="orbit" style="width:160px;height:160px"></div>
+        <div class="orbit" style="width:220px;height:220px;animation-direction:reverse;animation-duration:30s"></div>
+        <div class="wizard-logo-large">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+      </div>
+
+      <div class="wizard-step-label">Step 1 of 7</div>
+      <h1 class="wizard-step-title gradient-text">Welcome to BunkWise</h1>
+      <p class="wizard-step-subtitle">
+        The smartest way to track your college attendance. Know exactly when you can bunk and still stay safe.
+      </p>
+
+      <div class="wizard-features-list">
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-chart-pie"></i>
+          Smart Analytics
+        </div>
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-calculator"></i>
+          Bunk Calculator
+        </div>
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-wifi-slash"></i>
+          Works Offline
+        </div>
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          100% Private
+        </div>
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-bell"></i>
+          Reminders
+        </div>
+        <div class="wizard-feature-item">
+          <i class="fa-solid fa-file-import"></i>
+          Smart Import
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <span class="wizard-step-counter">1 / 7</span>
+        <button class="btn btn-primary btn-lg" id="step1-next">
+          Let's Get Started <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Name -->
+    <div class="wizard-card d-none" id="step-2" data-step="2">
+      <div class="wizard-step-icon">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="wizard-step-label">Step 2 of 7</div>
+      <h2 class="wizard-step-title">What's your name?</h2>
+      <p class="wizard-step-subtitle">We'll personalize your experience.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="input-name">Full Name</label>
+        <div class="input-group">
+          <i class="input-icon fa-solid fa-user"></i>
+          <input
+            class="form-input"
+            id="input-name"
+            type="text"
+            placeholder="e.g. Rahul Sharma"
+            maxlength="60"
+            autocomplete="name"
+            autocapitalize="words"
+          />
+        </div>
+        <div class="form-error d-none" id="error-name">
+          <i class="fa-solid fa-circle-exclamation"></i> Please enter your name
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="step2-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <span class="wizard-step-counter">2 / 7</span>
+        <button class="btn btn-primary" id="step2-next">
+          Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: College -->
+    <div class="wizard-card d-none" id="step-3" data-step="3">
+      <div class="wizard-step-icon">
+        <i class="fa-solid fa-building-columns"></i>
+      </div>
+      <div class="wizard-step-label">Step 3 of 7</div>
+      <h2 class="wizard-step-title">Your College</h2>
+      <p class="wizard-step-subtitle">Tell us which college you're attending.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="input-college">College Name</label>
+        <div class="input-group">
+          <i class="input-icon fa-solid fa-building-columns"></i>
+          <input
+            class="form-input"
+            id="input-college"
+            type="text"
+            placeholder="e.g. VJTI Mumbai"
+            maxlength="100"
+            autocomplete="organization"
+            autocapitalize="words"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="input-department">Department (optional)</label>
+        <div class="input-group">
+          <i class="input-icon fa-solid fa-microscope"></i>
+          <input
+            class="form-input"
+            id="input-department"
+            type="text"
+            placeholder="e.g. Computer Engineering"
+            maxlength="80"
+            autocapitalize="words"
+          />
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="step3-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <span class="wizard-step-counter">3 / 7</span>
+        <button class="btn btn-primary" id="step3-next">
+          Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Semester -->
+    <div class="wizard-card d-none" id="step-4" data-step="4">
+      <div class="wizard-step-icon">
+        <i class="fa-solid fa-book-bookmark"></i>
+      </div>
+      <div class="wizard-step-label">Step 4 of 7</div>
+      <h2 class="wizard-step-title">Current Semester</h2>
+      <p class="wizard-step-subtitle">Which semester are you in?</p>
+
+      <div class="form-group">
+        <label class="form-label" for="input-semester">Semester</label>
+        <select class="form-select" id="input-semester">
+          <option value="">— Select Semester —</option>
+          <option value="1">1st Semester</option>
+          <option value="2">2nd Semester</option>
+          <option value="3">3rd Semester</option>
+          <option value="4">4th Semester</option>
+          <option value="5">5th Semester</option>
+          <option value="6">6th Semester</option>
+          <option value="7">7th Semester</option>
+          <option value="8">8th Semester</option>
+        </select>
+        <div class="form-error d-none" id="error-semester">
+          <i class="fa-solid fa-circle-exclamation"></i> Please select your semester
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="input-rollno">Roll Number (optional)</label>
+        <div class="input-group">
+          <i class="input-icon fa-solid fa-id-card"></i>
+          <input
+            class="form-input"
+            id="input-rollno"
+            type="text"
+            placeholder="e.g. 2021CE001"
+            maxlength="20"
+            autocapitalize="characters"
+          />
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="step4-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <span class="wizard-step-counter">4 / 7</span>
+        <button class="btn btn-primary" id="step4-next">
+          Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 5: Attendance Target -->
+    <div class="wizard-card d-none" id="step-5" data-step="5">
+      <div class="wizard-step-icon">
+        <i class="fa-solid fa-bullseye"></i>
+      </div>
+      <div class="wizard-step-label">Step 5 of 7</div>
+      <h2 class="wizard-step-title">Attendance Target</h2>
+      <p class="wizard-step-subtitle">What minimum attendance % do you need to maintain?</p>
+
+      <div class="target-options" id="target-presets">
+        <div class="target-option" data-value="75">
+          <div class="target-option-value">75%</div>
+          <div class="target-option-label">Standard</div>
+        </div>
+        <div class="target-option" data-value="80">
+          <div class="target-option-value">80%</div>
+          <div class="target-option-label">Strict</div>
+        </div>
+        <div class="target-option" data-value="85">
+          <div class="target-option-value">85%</div>
+          <div class="target-option-label">Safe</div>
+        </div>
+        <div class="target-option" data-value="custom">
+          <div class="target-option-value"><i class="fa-solid fa-sliders" style="font-size:20px"></i></div>
+          <div class="target-option-label">Custom</div>
+        </div>
+      </div>
+
+      <div class="target-custom d-none" id="target-custom-section">
+        <div class="target-slider-value"><span id="slider-val">75</span>%</div>
+        <input
+          type="range"
+          class="range-slider"
+          id="target-slider"
+          min="50"
+          max="100"
+          value="75"
+          step="1"
+        />
+        <div style="display:flex;justify-content:space-between;margin-top:6px">
+          <span style="font-size:12px;color:var(--text-tertiary)">50%</span>
+          <span style="font-size:12px;color:var(--text-tertiary)">100%</span>
+        </div>
+      </div>
+
+      <input type="hidden" id="final-target" value="75" />
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="step5-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <span class="wizard-step-counter">5 / 7</span>
+        <button class="btn btn-primary" id="step5-next">
+          Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 6: Import Timetable -->
+    <div class="wizard-card d-none" id="step-6" data-step="6">
+      <div class="wizard-step-icon">
+        <i class="fa-solid fa-calendar-plus"></i>
+      </div>
+      <div class="wizard-step-label">Step 6 of 7</div>
+      <h2 class="wizard-step-title">Set Up Timetable</h2>
+      <p class="wizard-step-subtitle">Import your timetable or add subjects manually.</p>
+
+      <div class="import-methods" id="import-methods">
+        <div class="import-method-card" data-method="pdf" id="method-pdf">
+          <div class="import-method-icon" style="background:rgba(244,67,54,0.12);color:var(--color-danger)">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+          <div class="import-method-name">PDF Timetable</div>
+          <div class="import-method-desc">Import from a PDF file</div>
+        </div>
+        <div class="import-method-card" data-method="image" id="method-image">
+          <div class="import-method-icon" style="background:rgba(41,182,246,0.12);color:var(--color-info)">
+            <i class="fa-solid fa-image"></i>
+          </div>
+          <div class="import-method-name">Image / Photo</div>
+          <div class="import-method-desc">JPG, PNG timetable</div>
+        </div>
+        <div class="import-method-card" data-method="camera" id="method-camera">
+          <div class="import-method-icon" style="background:rgba(76,175,80,0.12);color:var(--color-success)">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <div class="import-method-name">Camera</div>
+          <div class="import-method-desc">Take a photo now</div>
+        </div>
+        <div class="import-method-card" data-method="manual" id="method-manual">
+          <div class="import-method-icon" style="background:rgba(108,99,255,0.12);color:var(--color-primary)">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </div>
+          <div class="import-method-name">Manual Entry</div>
+          <div class="import-method-desc">Add subjects yourself</div>
+        </div>
+      </div>
+
+      <!-- Hidden file input -->
+      <input type="file" id="file-input-pdf"   accept=".pdf"             style="display:none" />
+      <input type="file" id="file-input-image" accept="image/*"          style="display:none" />
+      <input type="file" id="file-input-camera" accept="image/*" capture="environment" style="display:none" />
+
+      <!-- Import processing area -->
+      <div id="import-processing" class="d-none">
+        <div style="text-align:center;padding:var(--space-8) var(--space-4)">
+          <div class="loading-spinner" style="margin:0 auto var(--space-4)"></div>
+          <div id="import-status" style="color:var(--text-secondary);font-size:14px">Processing…</div>
+          <div class="progress-bar-container" style="margin-top:var(--space-4);height:4px">
+            <div class="progress-bar animated" id="import-progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual quick-add subjects -->
+      <div id="manual-subjects" class="d-none">
+        <div id="subject-list-wizard" class="stagger-children"></div>
+        <button class="btn btn-ghost btn-block" id="add-subject-wizard" style="margin-top:var(--space-3)">
+          <i class="fa-solid fa-plus"></i> Add Subject
+        </button>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="step6-back">
+          <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <span class="wizard-step-counter">6 / 7</span>
+        <button class="btn btn-primary" id="step6-next">
+          Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 7: Finish -->
+    <div class="wizard-card d-none" id="step-7" data-step="7">
+      <div class="wizard-finish">
+        <div class="wizard-finish-animation">
+          <i class="fa-solid fa-party-horn"></i>
+        </div>
+
+        <h2 class="wizard-step-title" style="margin-bottom:var(--space-3)">
+          You're all set! 🎉
+        </h2>
+        <p class="wizard-step-subtitle" style="margin-bottom:var(--space-6)">
+          Welcome aboard! Here's a summary of your setup.
+        </p>
+
+        <div class="wizard-summary-grid" id="wizard-summary">
+          <!-- Built by wizard.js -->
+        </div>
+
+        <div style="margin-bottom:var(--space-6)">
+          <label class="form-check" style="justify-content:center;gap:var(--space-3)">
+            <input type="checkbox" class="form-check" id="enable-notifications" />
+            <span class="form-check-label">Enable attendance reminders</span>
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-xl btn-block" id="finish-btn">
+          <i class="fa-solid fa-rocket"></i> Open Dashboard
+        </button>
+
+        <p style="margin-top:var(--space-4);font-size:13px;color:var(--text-tertiary)">
+          You can change all settings later in the Settings page.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /wizard-container -->
+</div><!-- /wizard-page -->
+
+<!-- App JS (module) -->
+<script type="module" src="./js/app.js"></script>
+
+</body>
+</html>

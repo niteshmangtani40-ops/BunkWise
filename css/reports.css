@@ -1,0 +1,306 @@
+/* Reports / Heatmap page styles */
+
+.heatmap-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.heatmap-toolbar .heatmap-view-btn.active {
+  background: rgba(var(--color-primary-rgb), 0.12);
+  color: var(--color-primary-light);
+  border-color: rgba(var(--color-primary-rgb), 0.3);
+}
+
+.heatmap-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.heatmap-nav-group,
+.heatmap-select-group {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.heatmap-select-group .form-select {
+  min-width: 160px;
+}
+
+.heatmap-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.heatmap-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.heatmap-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+}
+
+.legend-swatch.present,
+.heatmap-cell.present {
+  background: rgba(var(--color-success-rgb), 0.18);
+  border-color: rgba(var(--color-success-rgb), 0.3);
+}
+
+.legend-swatch.absent,
+.heatmap-cell.absent {
+  background: rgba(var(--color-danger-rgb), 0.18);
+  border-color: rgba(var(--color-danger-rgb), 0.3);
+}
+
+.legend-swatch.holiday,
+.heatmap-cell.holiday {
+  background: rgba(var(--color-warning-rgb), 0.18);
+  border-color: rgba(var(--color-warning-rgb), 0.3);
+}
+
+.legend-swatch.noclass,
+.heatmap-cell.noclass,
+.heatmap-cell.empty {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border-color);
+}
+
+.legend-swatch.today,
+.heatmap-cell.today {
+  background: rgba(var(--color-info-rgb), 0.18);
+  border-color: rgba(var(--color-info-rgb), 0.3);
+}
+
+.attendance-heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: var(--space-4);
+}
+
+.heatmap-label,
+.heatmap-cell {
+  min-height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.heatmap-label {
+  color: var(--text-tertiary);
+  min-height: 22px;
+}
+
+.heatmap-cell {
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  animation: heatmapCellIn 0.35s ease both;
+}
+
+.heatmap-cell:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.heatmap-cell.selected {
+  outline: 2px solid rgba(var(--color-primary-rgb), 0.4);
+}
+
+.heatmap-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.history-empty-card {
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px dashed var(--border-color);
+  background: var(--glass-bg);
+}
+
+.history-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.prediction-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.prediction-subject-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  background: var(--glass-bg);
+}
+
+.prediction-subject-top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+
+.prediction-subject-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.prediction-subject-meta {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.prediction-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.prediction-subject-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.prediction-subject-stat {
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  background: rgba(var(--color-primary-rgb), 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.prediction-subject-stat span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.prediction-subject-stat strong {
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.prediction-bars {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.prediction-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(var(--color-primary-rgb), 0.08);
+  overflow: hidden;
+}
+
+.prediction-bar > div {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+.prediction-card-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.prediction-insight {
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@keyframes heatmapCellIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+  .heatmap-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prediction-subject-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prediction-subject-top {
+    flex-direction: column;
+  }
+
+  .attendance-heatmap {
+    gap: 6px;
+  }
+
+  .heatmap-cell {
+    min-height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heatmap-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heatmap-controls,
+  .heatmap-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}/* Reports page styles are defined in components.css for now. */
