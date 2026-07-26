@@ -13,7 +13,7 @@
 import { initStore, isSetupComplete, getState } from './store.js';
 import { registerSW, setupInstallPrompt, setupNetworkIndicator } from './pwa.js';
 import { showToast } from './notifications.js';
-import { startDateWatcher } from "./services/dateWatcher.js";
+import { startDateWatcher } from "./services/datewatcher.js";
 const initializedPages = new Set();
 /* ─────────────────────────────────────────────────────────────
    BOOT
